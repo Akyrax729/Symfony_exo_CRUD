@@ -18,11 +18,29 @@
     <p>Ingrédient secret</p>
     <p>Taille de la pate</p>
 
+    
+
     {% for pizza in pizzas %}
+    <p>
+        {# {{ dump(pizza)}}
+        {{ dump(ingredient)}} #}
+    </p>
         <div>
             <h2> {{ pizza.pizza }} </h2>
             <p> {{ pizza.ingredientsecret }} </p>
             <p> {{ pizza.typepate.label }} </p>
+
+        {% for ingredient in ingredients %}
+
+            <p> {{ dump(pizza) }} </p>
+            {# <p> {{ dump(ingredients) }} </p> #}
+
+            {# affichage de tous les ingrédients / pas ce qu'on veux #}
+            <p> {{ ingredient.ingredient }} </p>
+
+        {% endfor %}
+
+
             <a href= {{path('update_pizza',{'id' : pizza.id})}} >Modifier</a>
             <form method="POST" onsubmit="return confirm('Confimer la suppression ?')" action=" {{ path('delete_pizza', {'id': pizza.id}) }} ">
                 <input type="hidden" name="_method" value="delete">

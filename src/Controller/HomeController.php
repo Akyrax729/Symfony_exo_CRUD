@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Pizza;
 use App\Form\PizzaType;
-use App\Repository\PateRepository;
 use App\Repository\PizzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\IngredientsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,7 +16,7 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
 
-    public function index(Request $request, EntityManagerInterface $entityManager, PizzaRepository $repository, PateRepository $pateRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, PizzaRepository $repository, IngredientsRepository $ingRepository): Response
     {
 
         // FORM
@@ -42,12 +42,14 @@ class HomeController extends AbstractController
         // VIEW 
 
         $pizzas = $repository->findAll();
+        $ingredients = $ingRepository->findAll();
 
         // RETURN 
         
         return $this->render('home/index.html.twig', [
             'pizzaform'=>$form->createView(),
             'pizzas'=>$pizzas,
+            'ingredients'=>$ingredients,
         ]); 
     }
 

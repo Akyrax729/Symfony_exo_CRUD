@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Pizza;
 use App\Entity\Pate;
+use App\Entity\Pizza;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PizzaType extends AbstractType
 {
@@ -16,12 +17,9 @@ class PizzaType extends AbstractType
         $builder
             ->add('Pizza')
             ->add('Ingredient_secret')
-            ->add('Type_pate', ChoiceType::class, [
-                'choices' => [
-                    'Fine' =>       1,
-                    'Epaisse' =>    2,
-                    'Mixte' =>      3,
-                ],
+            ->add('Type_pate', EntityType::class, [
+                'class' => Pate::class,
+                'choice_label' => 'label',
             ]);
     }
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PizzaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PizzaRepository::class)]
@@ -22,6 +24,17 @@ class Pizza
     #[ORM\ManyToOne(inversedBy: 'pate')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Pate $type_pate = null;
+
+    /**
+     * @var Collection<int, Ingredients>
+     */
+    #[ORM\ManyToMany(targetEntity: Ingredients::class, mappedBy: 'pizza')]
+    private Collection $ingredients;
+
+    public function __construct()
+    {
+        $this->ingredients = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +73,33 @@ class Pizza
     public function setTypePate(?Pate $type_pate): static
     {
         $this->type_pate = $type_pate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ingredients>
+     */
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    public function addIngredient(Ingredients $ingredient): static
+    {
+        if (!$this->ingredients->contains($ingredient)) {
+            $this->ingredients->add($ingredient);
+            $ingredient->addPizza($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredients $ingredient): static
+    {
+        if ($this->ingredients->removeElement($ingredient)) {
+            $ingredient->removePizza($this);
+        }
 
         return $this;
     }

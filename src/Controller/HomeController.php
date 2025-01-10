@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pizza;
 use App\Form\PizzaType;
+use App\Repository\PateRepository;
 use App\Repository\PizzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
 
-    public function index(Request $request, EntityManagerInterface $entityManager, PizzaRepository $repository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, PizzaRepository $repository, PateRepository $pateRepository): Response
     {
 
         // FORM

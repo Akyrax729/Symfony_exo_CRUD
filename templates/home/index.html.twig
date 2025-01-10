@@ -16,13 +16,15 @@
 
     <h2>Pizza</h2>
     <p>Ingrédient secret</p>
+    <p>Taille de la pate</p>
 
     {% for pizza in pizzas %}
         <div>
             <h2> {{ pizza.pizza }} </h2>
             <p> {{ pizza.ingredientsecret }} </p>
+            <p> {{ pizza.typepate.label }} </p>
             <a href= {{path('update_pizza',{'id' : pizza.id})}} >Modifier</a>
-            <form action="POST" onsubmit="return confirm('Confimer la suppression ?')" action=" {{ path('delete_pizza', {'id': pizza.id}) }} ">
+            <form method="POST" onsubmit="return confirm('Confimer la suppression ?')" action=" {{ path('delete_pizza', {'id': pizza.id}) }} ">
                 <input type="hidden" name="_method" value="delete">
                 <input type="hidden" name="_token" value="{{csrf_token('COUCOU' ~ pizza.id)}}">
                 <input type="submit" id="delete" value="Supprimer">

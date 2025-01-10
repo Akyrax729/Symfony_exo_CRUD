@@ -19,6 +19,10 @@ class Pizza
     #[ORM\Column(length: 255)]
     private ?string $Ingredient_secret = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pate')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Pate $type_pate = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -47,4 +51,17 @@ class Pizza
 
         return $this;
     }
+
+    public function getTypePate(): ?Pate
+    {
+        return $this->type_pate;
+    }
+
+    public function setTypePate(?Pate $type_pate): static
+    {
+        $this->type_pate = $type_pate;
+
+        return $this;
+    }
+
 }

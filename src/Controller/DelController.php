@@ -2,17 +2,25 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Pizza;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DelController extends AbstractController
 {
-    #[Route('/del', name: 'app_del')]
-    public function index(): Response
+    #[Route('/del/pizza/{id}', name: 'delete_pizza')]
+
+    public function delete(Pizza $pizza, Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('del/index.html.twig', [
-            'controller_name' => 'DelController',
-        ]);
+        if($this->isCsrfTokenValid("COUCOU". $pizza->getId(), $request->get('_token'))){
+            $entityManager->remove($pizza);
+            $entityManager->flush();
+            $this->addFlash("success","La suppression a été effectuée");
+            return $this->redirectToRoute("app_home");
+        }
+
     }
 }

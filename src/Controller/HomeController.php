@@ -49,7 +49,6 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'pizzaform'=>$form->createView(),
             'pizzas'=>$pizzas,
-            'ingredients'=>$ingredients,
         ]); 
     }
 

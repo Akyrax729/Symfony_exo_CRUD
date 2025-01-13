@@ -30,12 +30,8 @@
             <p> {{ pizza.ingredientsecret }} </p>
             <p> {{ pizza.typepate.label }} </p>
 
-        {% for ingredient in ingredients %}
+        {% for ingredient in pizza.ingredients %}
 
-            <p> {{ dump(pizza) }} </p>
-            {# <p> {{ dump(ingredients) }} </p> #}
-
-            {# affichage de tous les ingrédients / pas ce qu'on veux #}
             <p> {{ ingredient.ingredient }} </p>
 
         {% endfor %}

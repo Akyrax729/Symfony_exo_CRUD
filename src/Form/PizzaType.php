@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Ingredients;
+use App\Entity\Ingredient;
 use App\Entity\Pate;
 use App\Entity\Pizza;
 use Symfony\Component\Form\AbstractType;
@@ -22,15 +22,13 @@ class PizzaType extends AbstractType
                 'class' => Pate::class,
                 'choice_label' => 'label',
             ])
-            ->add('ingredients', EntityType::class, [
-                'class' => Ingredients::class,
+            ->add('ingredient', EntityType::class, [
+                'class' => Ingredient::class,
                 'choice_label'  =>  'ingredient',
                 'expanded' => true,
                 'multiple'  =>  true,
-            ]
-            )
-            ;
-    }
+            ])
+        ;}
 
     public function configureOptions(OptionsResolver $resolver): void
     {

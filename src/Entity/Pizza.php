@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\Ingredients;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PizzaRepository;
 use Doctrine\Common\Collections\Collection;
@@ -27,9 +26,9 @@ class Pizza
     private ?Pate $type_pate = null;
 
     /**
-     * @var Collection<int, Ingredients>
+     * @var Collection<int, Ingredient>
      */
-    #[ORM\ManyToMany(targetEntity: Ingredients::class, mappedBy: 'pizza')]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, mappedBy: 'tablejoin')]
     private Collection $ingredients;
 
     public function __construct()
@@ -79,27 +78,27 @@ class Pizza
     }
 
     /**
-     * @return Collection<int, Ingredients>
+     * @return Collection<int, Ingredient>
      */
     public function getIngredients(): Collection
     {
         return $this->ingredients;
     }
 
-    public function addIngredient(Ingredients $ingredient): static
+    public function addIngredient(Ingredient $ingredient): static
     {
         if (!$this->ingredients->contains($ingredient)) {
             $this->ingredients->add($ingredient);
-            $ingredient->addPizza($this);
+            $ingredient->addTablejoin($this);
         }
 
         return $this;
     }
 
-    public function removeIngredient(Ingredients $ingredient): static
+    public function removeIngredient(Ingredient $ingredient): static
     {
         if ($this->ingredients->removeElement($ingredient)) {
-            $ingredient->removePizza($this);
+            $ingredient->removeTablejoin($this);
         }
 
         return $this;

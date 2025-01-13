@@ -21,12 +21,12 @@ class Ingredient
     /**
      * @var Collection<int, Pizza>
      */
-    #[ORM\ManyToMany(targetEntity: Pizza::class, inversedBy: 'ingredients')]
-    private Collection $tablejoin;
+    #[ORM\ManyToMany(targetEntity: Pizza::class, mappedBy: 'ingredient')]
+    private Collection $pizzas;
 
     public function __construct()
     {
-        $this->tablejoin = new ArrayCollection();
+        $this->pizzas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,24 +49,28 @@ class Ingredient
     /**
      * @return Collection<int, Pizza>
      */
-    public function getTablejoin(): Collection
+    public function getPizzas(): Collection
     {
-        return $this->tablejoin;
+        return $this->pizzas;
     }
 
-    public function addTablejoin(Pizza $tablejoin): static
+    public function addPizza(Pizza $pizza): static
     {
-        if (!$this->tablejoin->contains($tablejoin)) {
-            $this->tablejoin->add($tablejoin);
+        if (!$this->pizzas->contains($pizza)) {
+            $this->pizzas->add($pizza);
+            $pizza->addIngredient($this);
         }
 
         return $this;
     }
 
-    public function removeTablejoin(Pizza $tablejoin): static
+    public function removePizza(Pizza $pizza): static
     {
-        $this->tablejoin->removeElement($tablejoin);
+        if ($this->pizzas->removeElement($pizza)) {
+            $pizza->removeIngredient($this);
+        }
 
         return $this;
     }
+
 }

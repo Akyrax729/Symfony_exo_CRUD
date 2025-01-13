@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Pizza;
 use App\Form\PizzaType;
+use App\Form\RegisterType;
 use App\Repository\PizzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +39,6 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_home');
 
         }
-
         // VIEW 
 
         $pizzas = $repository->findAll();
@@ -47,6 +48,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'pizzaform'=>$form->createView(),
             'pizzas'=>$pizzas,
+
         ]); 
     }
 

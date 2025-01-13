@@ -10,8 +10,32 @@ body {
   color: white;
 }
 
+nav>ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+nav>ul>li {
+  padding: 1rem;
+}
+
 a {
   color: wheat;
+}
+
+.pizza {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.pizza>div {
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.622);
+  border-radius: 25px;
+  margin: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */

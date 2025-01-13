@@ -14,32 +14,32 @@
         </div>
     {% endfor %}
 
-    <h2>Pizza</h2>
-    <p>Ingrédient secret</p>
-    <p>Taille de la pate</p>
+    <section class="pizza">
+        {% for pizza in pizzas %}
 
-    
+            <div>
+                <h2> {{ pizza.pizza }} </h2>
+                <p> {{ pizza.ingredientsecret }} </p>
+                <p> {{ pizza.typepate.label }} </p>
+                 {% for ingredient in pizza.ingredient %}
+            
 
-    {% for pizza in pizzas %}
-        <div>
-            <h2> {{ pizza.pizza }} </h2>
-            <p> {{ pizza.ingredientsecret }} </p>
-            <p> {{ pizza.typepate.label }} </p>
+                <p> {{ ingredient.label }} </p>
 
-        {% for ingredient in pizza.ingredients %}
+            {% endfor %}
+            
 
-            <p> {{ ingredient.label }} </p>
-
-        {% endfor %}
-
-
-            <a href= {{path('update_pizza',{'id' : pizza.id})}} >Modifier</a>
-            <form method="POST" onsubmit="return confirm('Confimer la suppression ?')" action=" {{ path('delete_pizza', {'id': pizza.id}) }} ">
-                <input type="hidden" name="_method" value="delete">
-                <input type="hidden" name="_token" value="{{csrf_token('COUCOU' ~ pizza.id)}}">
-                <input type="submit" id="delete" value="Supprimer">
-            </form>
-        </div>
-    {% endfor %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href= {{path('update_pizza',{'id' : pizza.id})}} >Modifier</a>
+                    <form method="POST" onsubmit="return confirm('Confimer la suppression ?')" action=" {{ path('delete_pizza', {'id': pizza.id}) }} ">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="_token" value="{{csrf_token('COUCOU' ~ pizza.id)}}">
+                        <input type="submit" id="delete" value="Supprimer">
+                    </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+        
+    </section>
 
 {% endblock %}

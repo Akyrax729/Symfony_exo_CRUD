@@ -22,7 +22,7 @@ class PizzaType extends AbstractType
                 'class' => Pate::class,
                 'choice_label' => 'label',
             ])
-            ->add('ingredients', EntityType::class, [
+            ->add('ingredient', EntityType::class, [
                 'class' => Ingredient::class,
                 'choice_label'  =>  'label',
                 'expanded' => true,

@@ -30,6 +30,7 @@ class HomeController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+
             $entityManager->persist($pizza);
 
             $entityManager->flush();

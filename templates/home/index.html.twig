@@ -3,10 +3,15 @@
 {% block title %}Home{% endblock %}
 
 {% block main %}
-    {{form_start(pizzaform)}}
-        {{form_widget(pizzaform)}}
-        <button>Ajouter</button>
-    {{form_end(pizzaform)}}
+    {% if is_granted('ROLE_ADMIN') %}
+
+        {{form_start(pizzaform)}}
+            {{form_widget(pizzaform)}}
+            <button>Ajouter</button>
+        {{form_end(pizzaform)}}
+
+    {% endif %}
+    
 
     {% for message in app.flashes('success') %}
         <div class="success alert-success">
@@ -19,6 +24,7 @@
 
             <div>
                 <h2> {{ pizza.pizza }} </h2>
+                <img src="{{asset('images/uploads/'~pizza.imagename)}}" alt="{{pizza.pizza}}">
                 <p> {{ pizza.ingredientsecret }} </p>
                 <p> {{ pizza.typepate.label }} </p>
                  {% for ingredient in pizza.ingredient %}
